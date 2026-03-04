@@ -4,196 +4,350 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Furniture Minimalis - Lemari & Meja Berkualitas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --cream: #f5f0e8;
+            --cream-dark: #ede5d8;
+            --warm-white: #faf8f4;
+            --wood: #a8926d;
+            --wood-dark: #8a7558;
+            --wood-light: #c4aa85;
+            --charcoal: #2a2520;
+            --stone: #6b6258;
+            --mist: #b5aca0;
+            --teal: #4a7a8a;
+            --teal-dark: #3a6a7a;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f8f6f3;
-            color: #2c2c2c;
+            font-family: 'Jost', sans-serif;
+            background: var(--cream);
+            color: var(--charcoal);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
+        /* ── INTRO PAGE ── */
         .intro-page {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #e8e4dc 0%, #f8f6f3 100%);
+            padding: 60px 24px;
+            position: relative;
+            background: var(--warm-white);
+            overflow: hidden;
+        }
+
+        /* Subtle grain texture overlay */
+        .intro-page::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                radial-gradient(ellipse at 20% 50%, rgba(168,146,109,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(168,146,109,0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Decorative lines */
+        .intro-page::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--wood), transparent);
         }
 
         .profile-photo {
-            width: 160px;
-            height: 160px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
-            background: #a8926d;
-            margin-bottom: 30px;
+            background: var(--cream-dark);
+            margin-bottom: 32px;
             overflow: hidden;
-            border: 5px solid white;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            position: relative;
+            animation: fadeDown 0.8s ease both;
+        }
+
+        .profile-photo::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 1px solid rgba(168,146,109,0.3);
+            animation: rotateBorder 8s linear infinite;
+        }
+
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg) scale(1); opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { transform: rotate(360deg) scale(1); opacity: 0.4; }
         }
 
         .profile-photo img {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             object-fit: cover;
         }
 
         .bio {
             text-align: center;
-            max-width: 500px;
-            margin-bottom: 30px;
+            max-width: 420px;
+            margin-bottom: 40px;
+            animation: fadeUp 0.9s 0.1s ease both;
         }
 
         .bio h1 {
-            font-size: 28px;
-            margin-bottom: 12px;
-            color: #3d3d3d;
-            font-weight: 600;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            color: var(--charcoal);
+            margin-bottom: 14px;
+        }
+
+        .bio-divider {
+            width: 40px;
+            height: 1px;
+            background: var(--wood);
+            margin: 0 auto 14px;
+            opacity: 0.6;
         }
 
         .bio p {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 300;
+            letter-spacing: 0.08em;
+            color: var(--stone);
+            margin-bottom: 6px;
+            text-transform: uppercase;
         }
 
         .social-links {
             display: flex;
             flex-direction: column;
-            gap: 18px;
-            margin-bottom: 40px;
+            gap: 14px;
+            margin-bottom: 44px;
             width: 100%;
-            max-width: 320px;
+            max-width: 300px;
+            animation: fadeUp 0.9s 0.2s ease both;
         }
 
         .social-btn {
             display: flex;
             align-items: center;
-            gap: 15px;
-            padding: 16px 24px;
+            gap: 16px;
+            padding: 15px 24px;
             background: white;
-            border-radius: 50px;
+            border-radius: 4px;
             text-decoration: none;
-            color: #2c2c2c;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
+            color: var(--charcoal);
+            border: 1px solid rgba(168,146,109,0.15);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            background: var(--wood);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
         }
 
         .social-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            transform: translateX(6px);
+            border-color: rgba(168,146,109,0.35);
+            box-shadow: 4px 0 20px rgba(168,146,109,0.12);
         }
 
-        .social-btn svg {
-            width: 32px;
-            height: 32px;
+        .social-btn:hover::before {
+            transform: scaleY(1);
         }
+
+        .social-btn svg { width: 26px; height: 26px; flex-shrink: 0; }
 
         .social-btn span {
-            font-size: 15px;
-            font-weight: 500;
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
         }
 
         .continue-btn {
-            padding: 16px 48px;
-            background: #a8926d;
-            color: white;
+            padding: 15px 52px;
+            background: var(--charcoal);
+            color: var(--cream);
             border: none;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: 2px;
+            font-family: 'Jost', sans-serif;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(168, 146, 109, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeUp 0.9s 0.3s ease both;
         }
 
-        .continue-btn:hover {
-            background: #96825f;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(168, 146, 109, 0.4);
+        .continue-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--wood);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
+        .continue-btn:hover::after { transform: scaleX(1); }
+        .continue-btn span { position: relative; z-index: 1; }
+
+        /* ── MAIN PAGE ── */
         .main-page {
             display: none;
             min-height: 100vh;
-            padding: 60px 20px 40px;
+            padding: 80px 24px 60px;
+            background: var(--cream);
         }
 
-        .main-page.active {
-            display: block;
-        }
+        .main-page.active { display: block; }
 
         .header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
+            animation: fadeDown 0.7s ease both;
         }
 
-        .header h2 {
-            font-size: 32px;
-            color: #3d3d3d;
+        .header-eyebrow {
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--wood);
             margin-bottom: 12px;
         }
 
+        .header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            font-weight: 400;
+            color: var(--charcoal);
+            margin-bottom: 16px;
+            letter-spacing: 0.04em;
+        }
+
+        .header-line {
+            width: 48px;
+            height: 1px;
+            background: var(--wood);
+            margin: 0 auto 16px;
+        }
+
         .header p {
-            color: #777;
-            font-size: 17px;
+            color: var(--stone);
+            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 0.06em;
         }
 
         .products {
-            max-width: 1200px;
+            max-width: 1160px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+            gap: 28px;
         }
 
         .product-card {
             background: white;
-            border-radius: 20px;
+            border-radius: 2px;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(168,146,109,0.12);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: fadeUp 0.6s ease both;
         }
 
+        .product-card:nth-child(1) { animation-delay: 0.05s; }
+        .product-card:nth-child(2) { animation-delay: 0.1s; }
+        .product-card:nth-child(3) { animation-delay: 0.15s; }
+        .product-card:nth-child(4) { animation-delay: 0.2s; }
+        .product-card:nth-child(5) { animation-delay: 0.25s; }
+        .product-card:nth-child(6) { animation-delay: 0.3s; }
+
         .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(42,37,32,0.1);
+            border-color: rgba(168,146,109,0.25);
         }
 
         .product-header-image {
             width: 100%;
-            height: 200px;
+            height: 210px;
             overflow: hidden;
-            background: #f0f0f0;
+            background: var(--cream-dark);
+            position: relative;
+        }
+
+        .product-header-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 60px;
+            background: linear-gradient(transparent, rgba(42,37,32,0.15));
         }
 
         .product-header-image img {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             object-fit: cover;
+            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .product-content {
-            padding: 25px;
+        .product-card:hover .product-header-image img {
+            transform: scale(1.06);
+        }
+
+        .product-content { padding: 24px; }
+
+        .product-tag {
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--wood);
+            margin-bottom: 8px;
         }
 
         .product-info h3 {
-            font-size: 22px;
-            color: #3d3d3d;
-            margin-bottom: 15px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--charcoal);
+            margin-bottom: 12px;
+            letter-spacing: 0.02em;
         }
 
         .product-info p {
-            color: #666;
+            color: var(--stone);
+            font-size: 13.5px;
+            font-weight: 300;
+            margin-bottom: 22px;
+            line-height: 1.75;
+        }
+
+        .product-divider {
+            height: 1px;
+            background: rgba(168,146,109,0.15);
             margin-bottom: 20px;
-            line-height: 1.7;
         }
 
         .product-buttons {
@@ -205,159 +359,167 @@
         .contact-btn {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 13px 28px;
-            background: #a8926d;
+            gap: 8px;
+            padding: 12px 22px;
+            background: var(--charcoal);
             color: white;
             text-decoration: none;
-            border-radius: 50px;
-            font-weight: 500;
+            border-radius: 2px;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(168, 146, 109, 0.3);
             flex: 1;
-            min-width: 150px;
+            min-width: 130px;
             justify-content: center;
         }
 
         .contact-btn:hover {
-            background: #96825f;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(168, 146, 109, 0.4);
+            background: var(--wood);
+            transform: translateY(-1px);
         }
 
-        .contact-btn svg {
-            width: 20px;
-            height: 20px;
-        }
+        .contact-btn svg { width: 16px; height: 16px; }
 
         .gallery-btn {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 13px 28px;
-            background: #5a8a9d;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-weight: 500;
+            gap: 8px;
+            padding: 12px 22px;
+            background: transparent;
+            color: var(--stone);
+            border: 1px solid rgba(168,146,109,0.3);
+            border-radius: 2px;
+            font-family: 'Jost', sans-serif;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(90, 138, 157, 0.3);
-            font-size: 14px;
             flex: 1;
-            min-width: 150px;
+            min-width: 130px;
             justify-content: center;
         }
 
         .gallery-btn:hover {
-            background: #4a7a8d;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(90, 138, 157, 0.4);
+            background: var(--cream-dark);
+            border-color: var(--wood);
+            color: var(--charcoal);
+            transform: translateY(-1px);
         }
 
-        /* Modal Gallery Styles */
+        /* ── MODAL ── */
         .modal {
             display: none;
             position: fixed;
             z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             overflow: auto;
-            background-color: rgba(0,0,0,0.9);
+            background: rgba(42,37,32,0.93);
+            backdrop-filter: blur(4px);
         }
 
-        .modal.active {
-            display: block;
-        }
+        .modal.active { display: block; }
 
         .modal-content {
             position: relative;
             margin: auto;
-            padding: 20px;
+            padding: 24px;
             max-width: 1200px;
-            width: 90%;
-            margin-top: 50px;
-            margin-bottom: 50px;
+            width: 92%;
+            margin-top: 48px;
+            margin-bottom: 48px;
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(168,146,109,0.2);
         }
 
         .modal-header h2 {
-            color: white;
-            font-size: 28px;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--cream);
+            font-size: 30px;
+            font-weight: 400;
+            letter-spacing: 0.06em;
         }
 
         .close-btn {
-            color: white;
-            font-size: 40px;
-            font-weight: bold;
+            color: var(--mist);
+            font-size: 28px;
             cursor: pointer;
             background: none;
             border: none;
             padding: 0;
             line-height: 1;
+            transition: color 0.2s;
         }
 
-        .close-btn:hover {
-            color: #a8926d;
-        }
+        .close-btn:hover { color: var(--wood-light); }
 
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
+            gap: 16px;
             margin-bottom: 30px;
         }
 
         .gallery-item {
             position: relative;
             overflow: hidden;
-            border-radius: 12px;
+            border-radius: 2px;
             cursor: pointer;
             aspect-ratio: 1;
-            background: #f0f0f0;
+            background: rgba(168,146,109,0.1);
         }
 
         .gallery-item img {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .gallery-item:hover img {
-            transform: scale(1.1);
+        .gallery-item:hover img { transform: scale(1.08); }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(42,37,32,0);
+            transition: background 0.3s ease;
+        }
+
+        .gallery-item:hover::after {
+            background: rgba(42,37,32,0.2);
         }
 
         .gallery-item .image-number {
             position: absolute;
             bottom: 10px;
             right: 10px;
-            background: rgba(168, 146, 109, 0.9);
+            background: rgba(168,146,109,0.85);
             color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 1px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            z-index: 1;
         }
 
-        /* Lightbox */
+        /* ── LIGHTBOX ── */
         .lightbox {
             display: none;
             position: fixed;
             z-index: 3000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.95);
+            inset: 0;
+            background: rgba(20,17,14,0.97);
         }
 
         .lightbox.active {
@@ -375,107 +537,102 @@
         .lightbox-content img {
             max-width: 100%;
             max-height: 90vh;
-            border-radius: 8px;
+            border-radius: 2px;
         }
 
         .lightbox-nav {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(168, 146, 109, 0.8);
+            background: rgba(168,146,109,0.7);
             color: white;
             border: none;
-            padding: 15px 20px;
+            width: 44px;
+            height: 44px;
             cursor: pointer;
-            font-size: 24px;
+            font-size: 20px;
             border-radius: 50%;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .lightbox-nav:hover {
-            background: rgba(168, 146, 109, 1);
-        }
-
-        .lightbox-prev {
-            left: 20px;
-        }
-
-        .lightbox-next {
-            right: 20px;
-        }
+        .lightbox-nav:hover { background: var(--wood); }
+        .lightbox-prev { left: -60px; }
+        .lightbox-next { right: -60px; }
 
         .lightbox-close {
             position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 40px;
-            font-weight: bold;
+            top: -44px;
+            right: 0;
+            color: var(--mist);
+            font-size: 32px;
             cursor: pointer;
             background: none;
             border: none;
+            transition: color 0.2s;
         }
 
-        .lightbox-close:hover {
-            color: #a8926d;
-        }
+        .lightbox-close:hover { color: var(--wood-light); }
 
+        /* ── FLOATING WA ── */
         .floating-wa {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
+            bottom: 28px;
+            right: 28px;
+            width: 56px;
+            height: 56px;
             background: #25D366;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            box-shadow: 0 4px 20px rgba(37,211,102,0.35);
             cursor: pointer;
             z-index: 1000;
-            transition: all 0.3s ease;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
             text-decoration: none;
         }
 
         .floating-wa:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5);
+            transform: scale(1.12) translateY(-2px);
+            box-shadow: 0 8px 28px rgba(37,211,102,0.45);
         }
 
-        .floating-wa svg {
-            width: 32px;
-            height: 32px;
-            fill: white;
+        .floating-wa svg { width: 28px; height: 28px; fill: white; }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
-            .header h2 {
-                font-size: 26px;
-            }
-            
+            .bio h1 { font-size: 30px; }
+            .header h2 { font-size: 32px; }
+
             .products {
                 grid-template-columns: 1fr;
-                gap: 25px;
+                gap: 22px;
             }
 
             .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: 15px;
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 12px;
             }
 
-            .product-buttons {
-                flex-direction: column;
-            }
+            .product-buttons { flex-direction: column; }
+            .contact-btn, .gallery-btn { width: 100%; }
 
-            .contact-btn, .gallery-btn {
-                width: 100%;
-            }
-
-            .lightbox-nav {
-                padding: 10px 15px;
-                font-size: 20px;
-            }
+            .lightbox-prev { left: 10px; }
+            .lightbox-next { right: 10px; }
         }
     </style>
 </head>
@@ -488,6 +645,7 @@
 
         <div class="bio">
             <h1>YSA INTERIOR</h1>
+            <div class="bio-divider"></div>
             <p>Lemari, Meja, Kursi & Dapur Berkualitas</p>
             <p>Triplek HPL • Design Minimalis • Harga Terjangkau</p>
         </div>
@@ -515,7 +673,7 @@
             </a>
         </div>
 
-        <button class="continue-btn" onclick="showMainPage()">Lanjutkan</button>
+        <button class="continue-btn" onclick="showMainPage()"><span>Lihat Koleksi</span></button>
     </div>
 
     <!-- Tombol Jasa Website -->
@@ -545,7 +703,9 @@
     <!-- Halaman Utama -->
     <div class="main-page" id="mainPage">
         <div class="header">
+            <div class="header-eyebrow">YSA Interior</div>
             <h2>Koleksi Furniture Kami</h2>
+            <div class="header-line"></div>
             <p>Interior Berkualitas Dengan Harga Terjangkau</p>
         </div>
 
@@ -557,9 +717,9 @@
                 </div>
                 <div class="product-content">
                     <div class="product-info">
-                        <h3>Kitchen Set</h3>
+                        <div class="product-tag">Dapur</div><h3>Kitchen Set</h3>
                         <p>Kitchen set / dapur minimalis dengan bahan triplek HPL berkualitas. Design simpel namun fungsional, tahan air dan mudah perawatannya. Custom sesuai ukuran dapur kamu.</p>
-                        <div class="product-buttons">
+                        <div class="product-divider"></div><div class="product-buttons">
                             <a href="https://wa.me/62881012494393?text=Halo,%20saya%20tertarik%20dengan%20Kitchen%20Set" class="contact-btn" target="_blank">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -581,9 +741,9 @@
                 </div>
                 <div class="product-content">
                     <div class="product-info">
-                        <h3>Kamar Set</h3>
+                        <div class="product-tag">Kamar Tidur</div><h3>Kamar Set</h3>
                         <p>Set kamar lengkap dengan desain minimalis modern. Terdiri dari tempat tidur, lemari, dan meja rias yang kompak. Material triplek HPL berkualitas tinggi, tahan lama dan mudah perawatan.</p>
-                        <div class="product-buttons">
+                        <div class="product-divider"></div><div class="product-buttons">
                             <a href="https://wa.me/62881012494393?text=Halo,%20saya%20tertarik%20dengan%20Kamar%20Set" class="contact-btn" target="_blank">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -605,9 +765,9 @@
                 </div>
                 <div class="product-content">
                     <div class="product-info">
-                        <h3>Backdrop TV</h3>
+                        <div class="product-tag">Ruang Tamu</div><h3>Backdrop TV</h3>
                         <p>Backdrop TV dengan desain elegan dan minimalis. Memberikan tampilan ruang tamu yang lebih rapi dan modern. Tersedia berbagai ukuran dan desain sesuai kebutuhan ruangan Anda.</p>
-                        <div class="product-buttons">
+                        <div class="product-divider"></div><div class="product-buttons">
                             <a href="https://wa.me/62881012494393?text=Halo,%20saya%20tertarik%20dengan%20Backdrop%20TV" class="contact-btn" target="_blank">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -629,9 +789,9 @@
                 </div>
                 <div class="product-content">
                     <div class="product-info">
-                        <h3>Lemari Tas & Aksesoris</h3>
+                        <div class="product-tag">Penyimpanan</div><h3>Lemari Tas & Aksesoris</h3>
                         <p>Lemari khusus untuk menyimpan tas, dompet, dan aksesoris dengan rapi. Dilengkapi dengan rak dan gantungan yang dapat disesuaikan. Material HPL yang kokoh dan awet.</p>
-                        <div class="product-buttons">
+                        <div class="product-divider"></div><div class="product-buttons">
                             <a href="https://wa.me/62881012494393?text=Halo,%20saya%20tertarik%20dengan%20Lemari%20Tas" class="contact-btn" target="_blank">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -653,9 +813,9 @@
                 </div>
                 <div class="product-content">
                     <div class="product-info">
-                        <h3>Lemari Pakaian</h3>
+                        <div class="product-tag">Penyimpanan</div><h3>Lemari Pakaian</h3>
                         <p>Lemari pakaian dengan desain minimalis elegan. Ruang penyimpanan yang luas dengan pembagian yang efisien. Pintu sliding atau swing door, tersedia berbagai ukuran sesuai kebutuhan ruangan.</p>
-                        <div class="product-buttons">
+                        <div class="product-divider"></div><div class="product-buttons">
                             <a href="https://wa.me/62881012494393?text=Halo,%20saya%20tertarik%20dengan%20Lemari" class="contact-btn" target="_blank">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -677,9 +837,9 @@
                 </div>
                 <div class="product-content">
                     <div class="product-info">
-                        <h3>Meja Rias</h3>
+                        <div class="product-tag">Kamar Tidur</div><h3>Meja Rias</h3>
                         <p>Meja rias dengan desain modern dan fungsional. Dilengkapi dengan cermin dan laci penyimpanan untuk makeup dan aksesoris. Finishing HPL yang halus dan mudah dibersihkan.</p>
-                        <div class="product-buttons">
+                        <div class="product-divider"></div><div class="product-buttons">
                             <a href="https://wa.me/62881012494393?text=Halo,%20saya%20tertarik%20dengan%20Meja%20Rias" class="contact-btn" target="_blank">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -701,9 +861,9 @@
                 </div>
                 <div class="product-content">
                     <div class="product-info">
-                        <h3>Meja</h3>
+                        <div class="product-tag">Ruang Kerja</div><h3>Meja</h3>
                         <p>Meja serbaguna untuk berbagai kebutuhan - kerja, belajar, atau makan. Desain minimalis yang cocok untuk berbagai konsep ruangan. Konstruksi kokoh dengan material triplek HPL berkualitas.</p>
-                        <div class="product-buttons">
+                        <div class="product-divider"></div><div class="product-buttons">
                             <a href="https://wa.me/62881012494393?text=Halo,%20saya%20tertarik%20dengan%20Meja" class="contact-btn" target="_blank">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -725,9 +885,9 @@
                 </div>
                 <div class="product-content">
                     <div class="product-info">
-                        <h3>Panel Dinding</h3>
+                        <div class="product-tag">Dekorasi</div><h3>Panel Dinding</h3>
                         <p>Panel dinding dekoratif untuk mempercantik ruangan. Tersedia berbagai motif dan tekstur yang elegan. Mudah dipasang dan memberikan kesan mewah pada interior rumah Anda.</p>
-                        <div class="product-buttons">
+                        <div class="product-divider"></div><div class="product-buttons">
                             <a href="https://wa.me/62881012494393?text=Halo,%20saya%20tertarik%20dengan%20Panel%20Dinding" class="contact-btn" target="_blank">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -749,9 +909,9 @@
                 </div>
                 <div class="product-content">
                     <div class="product-info">
-                        <h3>Pintu Sliding</h3>
+                        <div class="product-tag">Pintu</div><h3>Pintu Sliding</h3>
                         <p>Pintu sliding hemat ruang dengan sistem rel yang halus dan silent. Cocok untuk lemari, partisi ruangan, atau pintu kamar. Berbagai pilihan warna dan finishing sesuai selera.</p>
-                        <div class="product-buttons">
+                        <div class="product-divider"></div><div class="product-buttons">
                             <a href="https://wa.me/62881012494393?text=Halo,%20saya%20tertarik%20dengan%20Pintu%20Sliding" class="contact-btn" target="_blank">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -773,9 +933,9 @@
                 </div>
                 <div class="product-content">
                     <div class="product-info">
-                        <h3>Rak Sepatu</h3>
+                        <div class="product-tag">Penyimpanan</div><h3>Rak Sepatu</h3>
                         <p>Rak sepatu dengan desain minimalis dan kapasitas besar. Membantu menjaga kerapian area masuk rumah. Ventilasi yang baik, mudah dibersihkan, tersedia berbagai ukuran dan model.</p>
-                        <div class="product-buttons">
+                        <div class="product-divider"></div><div class="product-buttons">
                             <a href="https://wa.me/62881012494393?text=Halo,%20saya%20tertarik%20dengan%20Rak%20Sepatu" class="contact-btn" target="_blank">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
