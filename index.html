@@ -639,331 +639,137 @@
 <body>
 
 <!-- ── INTRO ANIMATION ── -->
-<div id="introAnim" style="
-    position:fixed; inset:0; z-index:99999;
-    background:#0c0808;
-    display:flex; align-items:center; justify-content:center;
-    flex-direction:column;
-">
-    <canvas id="starCanvas"></canvas>
-    <div id="introTagline" style="
-        margin-top:18px;
-        font-family:'Cormorant Garamond',serif;
-        font-size:13px;
-        letter-spacing:0.45em;
-        text-transform:uppercase;
-        color:rgba(210,140,120,0);
-        transition:color 1.2s ease;
-        font-weight:300;
-        font-style:italic;
-    ">Interior</div>
+<div id="introAnim">
+    <svg id="logoSvg" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- House left outline (bigger house) -->
+        <!-- Left roof peak -->
+        <polyline class="draw-line" id="line-roof-left" points="80,155 130,100 180,155"
+            style="stroke-dasharray:160; stroke-dashoffset:160; animation-delay:0.1s; animation-duration:1.0s"/>
+        <!-- Left house walls box -->
+        <polyline class="draw-line" id="line-walls-left" points="88,155 88,200 172,200 172,155"
+            style="stroke-dasharray:250; stroke-dashoffset:250; animation-delay:1.0s; animation-duration:0.9s"/>
+        <!-- Door/window cutout on left house -->
+        <rect class="draw-line" id="line-door" x="116" y="167" width="28" height="33"
+            style="stroke-dasharray:122; stroke-dashoffset:122; animation-delay:1.8s; animation-duration:0.6s"/>
+
+        <!-- House right outline (smaller, attached) -->
+        <!-- Right roof peak -->
+        <polyline class="draw-line" id="line-roof-right" points="150,155 190,110 230,155"
+            style="stroke-dasharray:140; stroke-dashoffset:140; animation-delay:0.4s; animation-duration:0.9s"/>
+        <!-- Right house walls -->
+        <polyline class="draw-line" id="line-walls-right" points="158,155 158,200 222,200 222,155"
+            style="stroke-dasharray:230; stroke-dashoffset:230; animation-delay:1.2s; animation-duration:0.8s"/>
+
+        <!-- YSA text -->
+        <text class="logo-text" id="text-ysa" x="250" y="158"
+            style="opacity:0; animation-delay:2.5s">YSA</text>
+
+        <!-- INTERIOR text -->
+        <text class="logo-text-sub" id="text-interior" x="250" y="195"
+            style="opacity:0; animation-delay:3.0s">INTERIOR</text>
+    </svg>
+
+    <div id="introTagline">crafted with care</div>
 </div>
 
 <style>
 #introAnim {
-    transition: opacity 1s ease;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #060606;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: opacity 1.2s ease;
 }
 #introAnim.fadeout {
     opacity: 0;
     pointer-events: none;
 }
+
+#logoSvg {
+    width: min(80vw, 420px);
+    height: auto;
+    overflow: visible;
+}
+
+/* SVG line draw style */
+.draw-line {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: drawStroke 1s ease forwards;
+}
+
+@keyframes drawStroke {
+    to { stroke-dashoffset: 0; }
+}
+
+/* YSA main text */
+.logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 0.8;
+    letter-spacing: 0.18em;
+    text-anchor: start;
+    animation: textAppear 0.8s ease forwards;
+}
+
+/* INTERIOR subtext */
+.logo-text-sub {
+    font-family: 'Jost', sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 0.5;
+    letter-spacing: 0.42em;
+    text-anchor: start;
+    animation: textAppear 0.9s ease forwards;
+}
+
+@keyframes textAppear {
+    0%   { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+#introTagline {
+    margin-top: 32px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0);
+    font-weight: 300;
+    font-style: italic;
+    animation: tagFadeIn 1s ease 3.6s forwards;
+}
+
+@keyframes tagFadeIn {
+    to { color: rgba(255,255,255,0.35); }
+}
 </style>
 
 <script>
 (function(){
-    const canvas = document.getElementById('starCanvas');
-    const ctx = canvas.getContext('2d');
-    const W = Math.min(window.innerWidth, 600);
-    const H = Math.min(window.innerHeight * 0.6, 300);
-    canvas.width = W; canvas.height = H;
-    const CX = W/2, CY = H/2;
-
-    function getTextPixels(){
-        const off = document.createElement('canvas');
-        off.width = W; off.height = H;
-        const o = off.getContext('2d');
-        o.fillStyle = 'white';
-        const fs = Math.min(W * 0.28, 160);
-        o.font = `700 ${fs}px Georgia`;
-        o.textAlign = 'center'; o.textBaseline = 'middle';
-        o.fillText('YSA', W/2, H/2 + fs*0.06);
-        const d = o.getImageData(0,0,W,H).data;
-        const px = [];
-        const gap = Math.max(4, Math.floor(W/130));
-        for(let y=0;y<H;y+=gap) for(let x=0;x<W;x+=gap)
-            if(d[(y*W+x)*4+3]>128) px.push({x,y});
-        return px;
-    }
-
-    function drawRoseStar(x, y, r, rot, shake, alpha, pulse){
-        ctx.save();
-        ctx.translate(x + shake.x, y + shake.y);
-        ctx.rotate(rot);
-
-        // Layered corona — breathes
-        [3.2, 2.2, 1.6].forEach((mul, i) => {
-            const ops = [0.10, 0.07, 0.04];
-            const gr = ctx.createRadialGradient(0,0,0,0,0,r*mul);
-            gr.addColorStop(0, `rgba(220,120,100,${alpha * ops[i] * (1 + pulse*0.3)})`);
-            gr.addColorStop(0.5, `rgba(200,100,80,${alpha * ops[i] * 0.5})`);
-            gr.addColorStop(1, 'transparent');
-            ctx.fillStyle = gr;
-            ctx.beginPath(); ctx.arc(0,0,r*mul,0,Math.PI*2); ctx.fill();
-        });
-
-        // 4 long rays
-        for(let i=0;i<4;i++){
-            const angle = (i/4)*Math.PI*2;
-            const len = r * (1.1 + pulse*0.08);
-            ctx.save(); ctx.rotate(angle);
-            const rg = ctx.createLinearGradient(0,0,len,0);
-            rg.addColorStop(0, `rgba(245,185,165,${alpha*0.95})`);
-            rg.addColorStop(0.25, `rgba(215,135,115,${alpha*0.55})`);
-            rg.addColorStop(1, 'transparent');
-            ctx.beginPath();
-            ctx.moveTo(0,-r*0.07); ctx.lineTo(len,0); ctx.lineTo(0,r*0.07);
-            ctx.closePath(); ctx.fillStyle=rg; ctx.fill();
-            ctx.restore();
-        }
-
-        // 4 medium diagonal rays
-        for(let i=0;i<4;i++){
-            const angle = ((i+0.5)/4)*Math.PI*2;
-            const len = r * (0.62 + pulse*0.05);
-            ctx.save(); ctx.rotate(angle);
-            const rg = ctx.createLinearGradient(0,0,len,0);
-            rg.addColorStop(0, `rgba(235,165,145,${alpha*0.72})`);
-            rg.addColorStop(1, 'transparent');
-            ctx.beginPath();
-            ctx.moveTo(0,-r*0.045); ctx.lineTo(len,0); ctx.lineTo(0,r*0.045);
-            ctx.closePath(); ctx.fillStyle=rg; ctx.fill();
-            ctx.restore();
-        }
-
-        // 8 tiny sparkle rays
-        for(let i=0;i<8;i++){
-            const angle = ((i+0.25)/8)*Math.PI*2;
-            const len = r*0.32;
-            ctx.save(); ctx.rotate(angle);
-            ctx.beginPath();
-            ctx.moveTo(0,-0.8); ctx.lineTo(len,0); ctx.lineTo(0,0.8);
-            ctx.closePath();
-            ctx.fillStyle = `rgba(255,205,190,${alpha*0.35})`; ctx.fill();
-            ctx.restore();
-        }
-
-        // Core
-        const cg = ctx.createRadialGradient(0,0,0,0,0,r*0.32);
-        cg.addColorStop(0, `rgba(255,248,244,${alpha})`);
-        cg.addColorStop(0.4, `rgba(235,165,145,${alpha*0.92})`);
-        cg.addColorStop(1, `rgba(180,80,70,${alpha*0.55})`);
-        ctx.shadowColor = '#e09080'; ctx.shadowBlur = 24;
-        ctx.beginPath(); ctx.arc(0,0,r*0.32,0,Math.PI*2);
-        ctx.fillStyle = cg; ctx.fill(); ctx.shadowBlur = 0;
-
-        ctx.restore();
-    }
-
-    class RoseParticle {
-        constructor(tx, ty){
-            this.tx=tx; this.ty=ty;
-            // spawn from random direction, not just center
-            const angle = Math.random()*Math.PI*2;
-            const dist = Math.random()*80+20;
-            this.x = CX + Math.cos(angle)*dist;
-            this.y = CY + Math.sin(angle)*dist;
-            this.delay = Math.random()*0.5;
-            this.size = Math.random()*2.2+0.7;
-            this.life = 0; this.bp = Math.random()*Math.PI*2;
-            // wander before settling
-            this.wanderX = (Math.random()-0.5)*60;
-            this.wanderY = (Math.random()-0.5)*60;
-            this.wanderDecay = 0.92;
-            const h = Math.random();
-            this.r = Math.floor(208+h*42);
-            this.g = Math.floor(128+h*52);
-            this.b = Math.floor(108+h*42);
-        }
-        update(p){
-            const pp = Math.max(0, p-this.delay)/(1-this.delay);
-            if(pp<=0) return;
-            // Easing — slow start, fast middle, slow settle
-            const e = pp<0.5 ? 2*pp*pp : 1-Math.pow(-2*pp+2,2)/2;
-            this.wanderX *= this.wanderDecay;
-            this.wanderY *= this.wanderDecay;
-            const wx = this.tx + this.wanderX;
-            const wy = this.ty + this.wanderY;
-            this.x += (wx - this.x) * 0.06 * (0.5 + e*3);
-            this.y += (wy - this.y) * 0.06 * (0.5 + e*3);
-            this.life = pp; this.bp += 0.022;
-        }
-        draw(){
-            if(this.life<=0) return;
-            const dx=this.tx-this.x, dy=this.ty-this.y;
-            const settled = Math.sqrt(dx*dx+dy*dy)<4;
-            const breathe = settled ? 0.82+0.18*Math.sin(this.bp) : 1;
-            const a = Math.min(1, this.life*2.5) * breathe;
-            if(settled){ ctx.shadowColor=`rgb(${this.r},${this.g},${this.b})`; ctx.shadowBlur=5; }
-            ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-            ctx.fillStyle = `rgba(${this.r},${this.g},${this.b},${a})`; ctx.fill();
-            ctx.shadowBlur=0;
-        }
-    }
-
-    class RoseShard {
-        constructor(){
-            const angle = Math.random()*Math.PI*2;
-            const speed = Math.random()*16+5;
-            this.x=CX; this.y=CY;
-            this.vx=Math.cos(angle)*speed; this.vy=Math.sin(angle)*speed;
-            this.life=1; this.rot=angle; this.len=Math.random()*18+5;
-            this.fade = 0.014+Math.random()*0.012;
-            const h = Math.random();
-            this.r=Math.floor(220+h*35); this.g=Math.floor(130+h*60); this.b=Math.floor(105+h*50);
-        }
-        update(){
-            this.x+=this.vx; this.y+=this.vy;
-            this.vx*=0.9; this.vy*=0.9;
-            this.vy+=0.1; // slight gravity
-            this.life-=this.fade;
-        }
-        draw(){
-            if(this.life<=0) return;
-            const ex=this.x+Math.cos(this.rot)*this.len*this.life;
-            const ey=this.y+Math.sin(this.rot)*this.len*this.life;
-            const gr=ctx.createLinearGradient(this.x,this.y,ex,ey);
-            gr.addColorStop(0,`rgba(${this.r},${this.g},${this.b},${this.life})`);
-            gr.addColorStop(1,'transparent');
-            ctx.beginPath(); ctx.moveTo(this.x,this.y); ctx.lineTo(ex,ey);
-            ctx.strokeStyle=gr; ctx.lineWidth=this.life*2.5; ctx.stroke();
-        }
-        get done(){ return this.life<=0; }
-    }
-
-    // Shockwave rings
-    class Shockwave {
-        constructor(){ this.rings=[]; for(let i=0;i<3;i++) this.rings.push({r:0,life:1,delay:i*12}); this.t=0; }
-        update(){ this.t++; this.rings.forEach(ring=>{ if(this.t>ring.delay){ ring.r+=7; ring.life-=0.025; } }); }
-        draw(){
-            this.rings.forEach(ring=>{
-                if(ring.life<=0||ring.r<1) return;
-                ctx.beginPath(); ctx.arc(CX,CY,ring.r,0,Math.PI*2);
-                ctx.strokeStyle=`rgba(220,140,120,${ring.life*0.4})`;
-                ctx.lineWidth=2; ctx.stroke();
-            });
-        }
-        get done(){ return this.rings.every(r=>r.life<=0); }
-    }
-
-    let phase='birth';
-    let starR=0, starAlpha=0, starRot=0, pulseT=0;
-    let shakeTime=0, shakeIntensity=0;
-    let explodeTime=0;
-    let shards=[], particles=[], textPixels=[];
-    let shockwave=null;
-    let formProgress=0, tagAlpha=0, animId;
-
-    textPixels = getTextPixels();
-
-    function loop(){
-        ctx.fillStyle = 'rgba(12,8,8,0.26)';
-        ctx.fillRect(0,0,W,H);
-
-        // BIRTH — star fades in from nothing, slow organic grow
-        if(phase==='birth'){
-            const growSpeed = starR < 20 ? 0.4 : starR < 50 ? 0.9 : 0.55;
-            starR = Math.min(72, starR + growSpeed);
-            starAlpha = Math.min(1, starAlpha + 0.018);
-            starRot += 0.005;
-            pulseT += 0.03;
-            drawRoseStar(CX,CY,starR,starRot,{x:0,y:0},starAlpha,Math.sin(pulseT)*0.5);
-            if(starR>=72 && starAlpha>=0.95) { phase='breathe'; shakeTime=0; }
-        }
-
-        // BREATHE — star pulses for a moment, calm before storm
-        else if(phase==='breathe'){
-            shakeTime++;
-            starRot += 0.006;
-            pulseT += 0.06;
-            drawRoseStar(CX,CY,starR,starRot,{x:0,y:0},1,Math.sin(pulseT)*0.8);
-            if(shakeTime>55) { phase='shake'; shakeTime=0; }
-        }
-
-        // SHAKE — escalating tremor, rotates faster
-        else if(phase==='shake'){
-            shakeTime++;
-            shakeIntensity = Math.pow(shakeTime/60, 2.2);
-            starRot += 0.01 + shakeIntensity*0.04;
-            pulseT += 0.08 + shakeIntensity*0.12;
-
-            const sx = (Math.random()-0.5) * shakeIntensity * 22;
-            const sy = (Math.random()-0.5) * shakeIntensity * 22;
-            const scaledR = starR * (1 + shakeIntensity*0.12);
-
-            drawRoseStar(CX,CY,scaledR,starRot,{x:sx,y:sy},1,Math.sin(pulseT)*shakeIntensity*2);
-
-            if(shakeTime > 80){
-                phase='explode';
-                shards = Array.from({length:90}, ()=>new RoseShard());
-                shockwave = new Shockwave();
-                particles = textPixels.map(p=>new RoseParticle(p.x,p.y));
-                explodeTime=0;
-            }
-        }
-
-        // EXPLODE
-        else if(phase==='explode'){
-            explodeTime++;
-
-            // Blinding flash
-            if(explodeTime<12){
-                const f = 1-explodeTime/12;
-                ctx.fillStyle=`rgba(230,150,130,${f*0.75})`; ctx.fillRect(0,0,W,H);
-            }
-
-            shockwave.update(); shockwave.draw();
-            shards.forEach(s=>{s.update();s.draw()}); shards=shards.filter(s=>!s.done);
-
-            if(explodeTime>28){
-                formProgress = Math.min(1, formProgress+0.006);
-                particles.forEach(p=>{p.update(formProgress);p.draw();});
-
-                if(formProgress>0.82){
-                    tagAlpha = Math.min(1, tagAlpha+0.012);
-                    document.getElementById('introTagline').style.color = `rgba(210,140,120,${tagAlpha*0.7})`;
-                }
-                if(formProgress>=1) phase='done';
-            }
-        }
-
-        // DONE — hold, then transition to website
-        else if(phase==='done'){
-            particles.forEach(p=>{p.update(1);p.draw();});
-            tagAlpha = Math.min(1, tagAlpha+0.008);
-            document.getElementById('introTagline').style.color = `rgba(210,140,120,${tagAlpha*0.7})`;
-
-            if(tagAlpha>=0.99){
-                phase='exit';
-                setTimeout(()=>{
-                    document.getElementById('introAnim').classList.add('fadeout');
-                    setTimeout(()=>{
-                        document.getElementById('introAnim').style.display='none';
-                    }, 1100);
-                }, 1200);
-            }
-        }
-
-        else if(phase==='exit'){
-            particles.forEach(p=>{p.update(1);p.draw();});
-        }
-
-        animId = requestAnimationFrame(loop);
-    }
-
-    requestAnimationFrame(loop);
+    // Auto-dismiss intro after animation completes
+    setTimeout(function(){
+        document.getElementById('introAnim').classList.add('fadeout');
+        setTimeout(function(){
+            document.getElementById('introAnim').style.display = 'none';
+        }, 1300);
+    }, 5200);
 })();
 </script>
-    <!-- Halaman Intro -->
+
+<!-- Halaman Intro -->
     <div class="intro-page" id="introPage">
         <div class="profile-photo">
             <img src="https://cdn.jsdelivr.net/gh/nothing010101/yogipeli@main/logo.jpg" alt="Profile">
