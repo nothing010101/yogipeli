@@ -871,12 +871,13 @@
 
         // BIRTH — star fades in from nothing, slow organic grow
         if(phase==='birth'){
-            starR = Math.min(72, starR + starR < 20 ? 0.4 : starR < 50 ? 0.8 : 0.5);
+            const growSpeed = starR < 20 ? 0.4 : starR < 50 ? 0.9 : 0.55;
+            starR = Math.min(72, starR + growSpeed);
             starAlpha = Math.min(1, starAlpha + 0.018);
-            starRot += 0.005 + starR*0.00005;
+            starRot += 0.005;
             pulseT += 0.03;
             drawRoseStar(CX,CY,starR,starRot,{x:0,y:0},starAlpha,Math.sin(pulseT)*0.5);
-            if(starR>=72 && starAlpha>=0.99) phase='breathe';
+            if(starR>=72 && starAlpha>=0.95) { phase='breathe'; shakeTime=0; }
         }
 
         // BREATHE — star pulses for a moment, calm before storm
@@ -885,14 +886,13 @@
             starRot += 0.006;
             pulseT += 0.06;
             drawRoseStar(CX,CY,starR,starRot,{x:0,y:0},1,Math.sin(pulseT)*0.8);
-            if(shakeTime>55) phase='shake';
+            if(shakeTime>55) { phase='shake'; shakeTime=0; }
         }
 
         // SHAKE — escalating tremor, rotates faster
         else if(phase==='shake'){
             shakeTime++;
-            // Exponential intensity
-            shakeIntensity = Math.pow((shakeTime-55)/55, 2.2);
+            shakeIntensity = Math.pow(shakeTime/60, 2.2);
             starRot += 0.01 + shakeIntensity*0.04;
             pulseT += 0.08 + shakeIntensity*0.12;
 
@@ -902,7 +902,7 @@
 
             drawRoseStar(CX,CY,scaledR,starRot,{x:sx,y:sy},1,Math.sin(pulseT)*shakeIntensity*2);
 
-            if(shakeTime > 115){
+            if(shakeTime > 80){
                 phase='explode';
                 shards = Array.from({length:90}, ()=>new RoseShard());
                 shockwave = new Shockwave();
